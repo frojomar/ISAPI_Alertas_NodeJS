@@ -1,0 +1,141 @@
+openapi: 3.0.1
+info:
+  title: GeoCardioBand Alertas
+  description: 'Esta es la API gestora de Alertas para el proyecto GeoCardioBand.'
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: javirojo@unex.es
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: https://virtserver.swaggerhub.com/javirojo/GeoCardioBand_Alertas/1.0.0
+servers:
+- url: https://www.geocardioband.com/api/v1/alertas
+- url: http://www.geocardioband.com/api/v1/alertas
+- url: https://virtserver.swaggerhub.com/javirojo/GeoCardioBand_Alertas/1.0.0
+tags:
+- name: alertas
+  description: Operaciones con las alertas
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+paths:
+  /alertas/alertar112:
+    post:
+      tags:
+      - alertas
+      summary: Alertar a emergencias con ubicación del usuario
+      operationId: alertarEmergencias
+      requestBody:
+        description: Ubicación del usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ubicacion'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Ubicacion'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        405:
+          description: Invalid input
+          content: {}
+        500:
+          description: "Error Interno"
+          content: {}
+      x-codegen-request-body-name: body
+  /alertas/alertarConocido:
+    post:
+      tags:
+      - alertas
+      summary: Alertar a conocido con ubicación del usuario y del desfibrilador
+      operationId: alertarConocido
+      requestBody:
+        description: Información de la alerta. El campo ubicacion_desfibrilador contendrá la ubicación del desfibrilador más cercano al usuario y el conocido.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alerta'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Alerta'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        405:
+          description: Invalid input
+          content: {}
+        500:
+          description: "Error Interno"
+          content: {}
+      x-codegen-request-body-name: body      
+  /alertas/cancelarAlerta:      
+    get:
+      tags:
+      - alertas
+      summary: Cancelar la alerta actual
+      operationId: cancelAlerta
+      responses:
+        200:
+          description: successful operation
+          content: {}
+        500:
+          description: "Error Interno"
+          content: {}
+      x-codegen-request-body-name: body       
+      
+components:
+  schemas:
+    Ubicacion:
+      type: object
+      properties:
+        latitud:
+          type: number
+          format: float64
+        longitud:
+          type: number
+          format: float64
+      xml:
+        name: Ubicacion
+    Contacto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        numero:
+          type: string
+        ubicacion:
+          $ref: '#/components/schemas/Ubicacion'
+      xml:
+        name: Contacto
+        
+    Alerta:
+      type: object
+      properties:
+        contacto:
+          $ref: '#/components/schemas/Contacto'
+        ubicacion_desfibrilador:
+          $ref: '#/components/schemas/Ubicacion'
+      xml:
+        name: Alerta
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
