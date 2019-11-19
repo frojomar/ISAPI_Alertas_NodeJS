@@ -4,7 +4,7 @@
 /**
  * Alertar a conocido con ubicación del usuario y del desfibrilador
  *
- * body Alerta Información de la alerta. El campo ubicacion_desfibrilador contendrá la ubicación del desfibrilador más cercano al usuario y el conocido.
+ * body Alerta 
  * no response value expected for this operation
  **/
 exports.alertarConocido = function(body) {
@@ -17,7 +17,7 @@ exports.alertarConocido = function(body) {
 /**
  * Alertar a emergencias con ubicación del usuario
  *
- * body Ubicacion Ubicación del usuario
+ * body Ubicacion Ubicacion del usuario
  * no response value expected for this operation
  **/
 exports.alertarEmergencias = function(body) {
@@ -30,11 +30,19 @@ exports.alertarEmergencias = function(body) {
 /**
  * Cancelar la alerta actual
  *
- * no response value expected for this operation
+ * returns CancelarResponse
  **/
 exports.cancelAlerta = function() {
   return new Promise(function(resolve, reject) {
-    resolve();
+    var examples = {};
+    examples['application/json'] = {
+  "status" : "alerta cancelada"
+};
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
   });
 }
 

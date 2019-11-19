@@ -30,15 +30,7 @@ paths:
       summary: Alertar a emergencias con ubicación del usuario
       operationId: alertarEmergencias
       requestBody:
-        description: Ubicación del usuario
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Ubicacion'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Ubicacion'
-        required: true
+        $ref: '#/components/requestBodies/Ubicacion'
       responses:
         200:
           description: successful operation
@@ -57,15 +49,7 @@ paths:
       summary: Alertar a conocido con ubicación del usuario y del desfibrilador
       operationId: alertarConocido
       requestBody:
-        description: Información de la alerta. El campo ubicacion_desfibrilador contendrá la ubicación del desfibrilador más cercano al usuario y el conocido.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Alerta'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Alerta'
-        required: true
+        $ref: '#/components/requestBodies/Alerta'
       responses:
         200:
           description: successful operation
@@ -86,7 +70,13 @@ paths:
       responses:
         200:
           description: successful operation
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelarResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CancelarResponse'
         500:
           description: "Error Interno"
           content: {}
@@ -129,13 +119,30 @@ components:
           $ref: '#/components/schemas/Ubicacion'
       xml:
         name: Alerta
-    ApiResponse:
+    CancelarResponse:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        type:
+        status:
           type: string
-        message:
-          type: string
+      xml:
+        name: CancelarResponse
+  requestBodies:
+    Ubicacion:
+      description: Ubicacion del usuario
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ubicacion'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Ubicacion'
+      required: true
+    Alerta:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Alerta'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Alerta'
+      required: true

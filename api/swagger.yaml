@@ -30,23 +30,15 @@ paths:
       summary: Alertar a emergencias con ubicación del usuario
       operationId: alertarEmergencias
       requestBody:
-        description: Ubicación del usuario
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Ubicacion'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Ubicacion'
-        required: true
+        $ref: '#/components/requestBodies/Ubicacion'
       responses:
-        200:
+        "200":
           description: successful operation
           content: {}
-        405:
+        "405":
           description: Invalid input
           content: {}
-        500:
+        "500":
           description: Error Interno
           content: {}
       x-codegen-request-body-name: body
@@ -58,24 +50,15 @@ paths:
       summary: Alertar a conocido con ubicación del usuario y del desfibrilador
       operationId: alertarConocido
       requestBody:
-        description: Información de la alerta. El campo ubicacion_desfibrilador contendrá
-          la ubicación del desfibrilador más cercano al usuario y el conocido.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Alerta'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Alerta'
-        required: true
+        $ref: '#/components/requestBodies/Alerta'
       responses:
-        200:
+        "200":
           description: successful operation
           content: {}
-        405:
+        "405":
           description: Invalid input
           content: {}
-        500:
+        "500":
           description: Error Interno
           content: {}
       x-codegen-request-body-name: body
@@ -87,10 +70,16 @@ paths:
       summary: Cancelar la alerta actual
       operationId: cancelAlerta
       responses:
-        200:
+        "200":
           description: successful operation
-          content: {}
-        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelarResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CancelarResponse'
+        "500":
           description: Error Interno
           content: {}
       x-codegen-request-body-name: body
@@ -131,13 +120,32 @@ components:
           $ref: '#/components/schemas/Ubicacion'
       xml:
         name: Alerta
-    ApiResponse:
+    CancelarResponse:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        type:
+        status:
           type: string
-        message:
-          type: string
+      example:
+        status: status
+      xml:
+        name: CancelarResponse
+  requestBodies:
+    Ubicacion:
+      description: Ubicacion del usuario
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ubicacion'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Ubicacion'
+      required: true
+    Alerta:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Alerta'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Alerta'
+      required: true

@@ -4,7 +4,7 @@ var utils = require('../utils/writer.js');
 var Alertas = require('../service/AlertasService');
 
 module.exports.alertarConocido = function alertarConocido (req, res, next) {
-  var body = req.swagger.params['body'].value;
+  var body = req.swagger.params['body'];
   Alertas.alertarConocido(body)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -15,7 +15,7 @@ module.exports.alertarConocido = function alertarConocido (req, res, next) {
 };
 
 module.exports.alertarEmergencias = function alertarEmergencias (req, res, next) {
-  var body = req.swagger.params['body'].value;
+  var body = req.swagger.params['body'];
   Alertas.alertarEmergencias(body)
     .then(function (response) {
       utils.writeJson(res, response);
